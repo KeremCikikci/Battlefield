@@ -46,6 +46,7 @@ def update():
     if fps and mouse.locked == False:
         mouse.locked = True
         mouse.visible = False
+        camera.on_enable()
     if fps == False and mouse.locked:
         camera.on_disable()
         mouse.locked = False
@@ -74,13 +75,6 @@ if fps:
     mouse.visible = False
 
 
-b = Button(text='hello world!', color=color.azure, icon='sword', scale=1, text_origin=(-.5,0))
-b.on_click = application.quit # assign a function to the button.
-b.tooltip = Tooltip('exit')
-
-#wp = WindowPanel()
-
-# wp = WindowPanel(
 #     title='Custom Window',
 #     content=(
 #         Text('Name:'),
