@@ -17,15 +17,24 @@ blocks = [
     load_texture('assets/grass.png'),
 ]
 
-sky = Entity(
-    parent=scene,
-    model='sphere',
-    texture=load_texture('assets/dark_sky.jpg'),
-    scale=100,
-    double_sided=True
-)
+#sky = Entity(
+    # parent=scene,
+    # model='sphere',
+    # texture=load_texture('assets/dark_sky.jpg'),
+    # scale=100,
+    # double_sided=True
+#)
+sky = Entity(color=color.rgb(255,255,255), model='sphere', double_sided=True, scale=100)
 
-tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank.png')
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex.png', y=1, x=1)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex1.png', y=1, x=2)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex2.png', y=1, x=3)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex3.png', y=1, x=4)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex4.png', y=1, x=5)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex5.png', y=1, x=6)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex6.png', y=1, x=7)
+tank = Entity(model='npcs/tank/tank', texture='npcs/tank/tank_tex7.png', y=1, x=8)
+
 
 def input(key):
     global fps
@@ -53,15 +62,15 @@ def update():
         mouse.visible = True
 
 class Ground(Button):
-    def __init__(self, position=(0, 0, 0), texture='assets/grass.png'):
+    def __init__(self, position=(0, 0, 0), texture='assets/grass/grass_tex.png'):
         super().__init__(
             parent=scene,
             position=position,
-            model='assets/block',
-            origin_y=0.5,
+            model='assets/grass/grass',
+            #origin_y=0.5,
             texture=texture,
-            color=color.color(0, 0, random.uniform(0.6, 1.0)),
-            scale=0.5
+            color=color.color(0, 0, random.uniform(0.9, 1.0)),
+            #scale=0.5
         )
 
 for z in range(10):
