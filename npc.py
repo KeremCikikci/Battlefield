@@ -5,12 +5,12 @@ sinDiff=[sin, cos, sin, cos]
 cosDiff=[cos, sin, cos, sin]
 
 class Tank(Button):
-    def __init__(self, name, position=(1, 10, 0), texture='npc/tank/tex_1.png'):
+    def __init__(self, name, position=(1, 10, 0), texture='tex_1.png'):
         super().__init__(
             parent=scene,
             position=position,
             model='npc/tank/tank',
-            texture=texture,
+            texture='npc/tank/' + texture,
             color=color.color(0, 0, random.uniform(0.9, 1.0)),
             origin_y=-.5
         )
