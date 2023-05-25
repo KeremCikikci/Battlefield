@@ -1,17 +1,16 @@
 from ursina import *
 import random as rd
-
 from npc import *
 from blocks import *
-from ui import *
+#from ui import *
 
 mWIDTH, mLENGTH = 10, 10
 
-npcs = [['tank1', 0], ['tank2', 0], ['tank3', 0], ['tank4', 0], ['tank5', 0]]
+npcs = [['tank1', 0]]#, ['tank2', 0], ['tank3', 0], ['tank4', 0], ['tank5', 0]]
 
 app = Ursina()
 
-x_pos, y_pos, z_pos = 17, 7, -14
+x_pos, y_pos, z_pos = 17, 12, -14
 x_angle, y_angle, z_angle = 30, -30, 0
 camera.position = (x_pos, y_pos, z_pos)
 camera.rotation = (x_angle, y_angle, z_angle)
