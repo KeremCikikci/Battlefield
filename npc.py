@@ -5,7 +5,7 @@ sinDiff=[sin, cos, sin, cos]
 cosDiff=[cos, sin, cos, sin]
 
 class Tank(Button):
-    def __init__(self, name, position=(1, 1, 0), texture='npc/tank/tank_tex6.png'):
+    def __init__(self, name, position=(1, 10, 0), texture='npc/tank/tex5.png'):
         super().__init__(
             parent=scene,
             position=position,
@@ -14,8 +14,11 @@ class Tank(Button):
             color=color.color(0, 0, random.uniform(0.9, 1.0)),
         )
         self.name = name
+        self.isSelected = True
+
         self.vel = .1
         self.max_s = .12
+        self.max_r_s = self.max_s / -2
         self.x_speed = 0
         self.z_speed = 0
         self.speed = math.sqrt(self.x_speed**2+self.z_speed**2)
@@ -36,21 +39,23 @@ class Tank(Button):
                 self.y = ray.world_point.y
 
     def update(self):
-        if held_keys['w'] and self.speed <= self.max_s: self.speed += self.vel * time.dt      
-        if held_keys['w'] == False and self.speed != 0:
-            self.speed -= self.speed/self.friction * time.dt
-            if self.speed < .01:
-                self.speed = 0
-        self.rotation_y -= self.rot_s * time.dt * held_keys['a']
-        self.rotation_y += self.rot_s * time.dt * held_keys['d']
+        if self.isSelected:
+            if held_keys['w'] and self.speed <= self.max_s: self.speed += self.vel * time.dt      
+            if held_keys['w'] == False and self.speed != 0:
+                self.speed -= self.speed/self.friction * time.dt
+                if self.speed < .01:
+                    self.speed = 0
+                
+            self.rotation_y -= self.rot_s * time.dt * held_keys['a']
+            self.rotation_y += self.rot_s * time.dt * held_keys['d']
 
         self.rotation_y %= 360
         if self.rotation_y < 0: self.rotation_y += 360
-        
+
         for i in range(4):
             if self.rotation_y >= i * 90 and self.rotation_y < (i+1)*90:
                 x_sign = -1 if i < 2 else 1
-                z_sign =  -1 if i == 0 or i == 3 else 1
+                z_sign = -1 if i == 0 or i == 3 else 1
                 self.x_speed = sinDiff[i](math.radians(self.rotation_y - i * 90)) * x_sign
                 self.z_speed = cosDiff[i](math.radians(self.rotation_y - i * 90)) * z_sign
   
