@@ -33,5 +33,5 @@ for z in range(mLENGTH):
 for i in range(len(npcs)):
     if npcs[i][1] == 0:
         Tank(npcs[i][0], position=(rd.randint(0, mWIDTH-1), 1, rd.randint(0, mLENGTH-1)), texture=npcs[i][2])
-
+        
 app.run()

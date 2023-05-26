@@ -54,26 +54,26 @@ class Tank(Button):
         if self.rotation_y < 0: self.rotation_y += 360
         self.position += self.back * self.speed
 
-        if self.gravity:
-            # gravity
-            ray = raycast(self.world_position, self.down, traverse_target=self.traverse_target)
-            #ray = boxcast(self.world_position, self.down)
-            if ray.distance <= .1:
-                if not self.grounded:
-                    self.land()
-                self.grounded = True
-                # make sure it's not a wall and that the point is not too far up
-                if ray.world_normal.y > .3 and ray.world_point.y - self.world_y < .2: # walk up slope
-                    self.y = ray.world_point[1]
-                return
-            else:
-                self.grounded = False
+        # if self.gravity:
+        #     # gravity
+        #     ray = raycast(self.world_position, self.down, traverse_target=self.traverse_target)
+        #     #ray = boxcast(self.world_position, self.down)
+        #     if ray.distance <= .1:
+        #         if not self.grounded:
+        #             self.land()
+        #         self.grounded = True
+        #         # make sure it's not a wall and that the point is not too far up
+        #         if ray.world_normal.y > .3 and ray.world_point.y - self.world_y < .2: # walk up slope
+        #             self.y = ray.world_point[1]
+        #         return
+        #     else:
+        #         self.grounded = False
 
-            # if not on ground and not on way up in jump, fall
-            self.y -= min(self.air_time, ray.distance-.05) * time.dt * 50
-            self.air_time += time.dt * .25 * self.gravity
+        #     # if not on ground and not on way up in jump, fall
+        #     self.y -= min(self.air_time, ray.distance-.05) * time.dt * 50
+        #     self.air_time += time.dt * .25 * self.gravity
 
-        # collide in x-y-Plane
+        # # collide in x-y-Plane
 
 
     def start_fall(self):

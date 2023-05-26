@@ -6,8 +6,7 @@ def update(self):
                 if self.speed < .01:
                     self.speed = 0
                 
-            self.rotation_y -= self.rot_s * time.dt * held_keys['a']
-            self.rotation_y += self.rot_s * time.dt * held_keys['d']
+            self.rotation_y -= self.rot_s * time.dt * (held_keys['a'] - held_keys['d'])
 
         self.rotation_y %= 360
         if self.rotation_y < 0: self.rotation_y += 360
