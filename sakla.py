@@ -1,3 +1,7 @@
+
+sinDiff=[sin, cos, sin, cos]
+cosDiff=[cos, sin, cos, sin]
+
 def update(self):
         if self.isSelected:
             if held_keys['w'] and self.speed <= self.max_s: self.speed += self.vel * time.dt      
