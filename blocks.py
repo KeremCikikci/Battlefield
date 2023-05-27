@@ -21,3 +21,14 @@ class Stone(Button):
             color=color.color(0, 0, random.uniform(0.9, 1.0)),
             origin=origin
         )
+
+class Sand(Button):
+    def __init__(self, position=(0, 0, 0), texture='blocks/sand_tex.png', origin=(0, 0, 0)):
+        super().__init__(
+            parent=scene,
+            position=position,
+            model='blocks/block',
+            texture=texture,
+            color=color.color(0, 0, random.uniform(0.9, 1.0)),
+            origin=origin
+        )

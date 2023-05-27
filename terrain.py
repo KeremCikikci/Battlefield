@@ -8,10 +8,9 @@ def vis_terrain(map_name):
     map_ = maps[map_name]
     for x in range(len(map_)):
         for z in range(len(map_[x])):
-            if map_[x][z] == 1:
-                Grass(position=(x,0,z))
-            if map_[x][z] == 2:
+            if map_[x][z] > 0 and map_[x][z] < 4:
                 Stone(position=(x,0,z))
+
 
 def vis_rect_terrain(mLENGTH, mWIDTH):
     for z in range(mLENGTH):
