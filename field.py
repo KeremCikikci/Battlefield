@@ -13,6 +13,9 @@ npcs = [['tank1', 0, 'tex_1_orange'], ['tank1', 0, 'tex_1_green'], ['tank1', 0, 
 
 app = Ursina()
 
+print(Grass().collider)
+
+
 EditorCamera()
 
 x_pos, y_pos, z_pos = 17, 12, -14
@@ -35,6 +38,6 @@ vis_rect_terrain(10, 10)
 ### Render NPCS
 for i in range(len(npcs)):
     if npcs[i][1] == 0:
-        Tank(npcs[i][0], position=(rd.randint(0, mWIDTH-1), 1, rd.randint(0, mLENGTH-1)), texture=npcs[i][2])
+        Tank(npcs[i][0], x=rd.randint(0, mWIDTH-1), z=rd.randint(0, mLENGTH-1), texture=npcs[i][2])
 
 app.run()
