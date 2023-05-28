@@ -1,24 +1,34 @@
 from blocks import *
+import npc
 from ursina import *
 from maps import dungeon
 
 maps = {"dungeon": dungeon}
 
+blocks = []
+
+npcs = []
+
 def vis_terrain(map_name):
     map_ = maps[map_name]
     for x in range(len(map_)):
         for z in range(len(map_[x])):
-            if map_[x][z] == 1:
-                Grass(position=(x,0,z))
-            elif map_[x][z] == 1:
-                Stone(position=(x,0,z))
-            elif map_[x][z] == 2:
-                Sand(position=(x,0,z))
+            if map_[x][z] > 0 and map_[x][z] < 3:
+                block = None
+                if map_[x][z] == 1:
+                    block = Grass(position=(x,0,z))
+                elif map_[x][z] == 1:
+                    block = Stone(position=(x,0,z))
+                elif map_[x][z] == 2:
+                    block = Sand(position=(x,0,z))
+                blocks.append(block)
+
 
 def vis_rect_terrain(mLENGTH, mWIDTH):
     for z in range(mLENGTH):
         for x in range(mWIDTH):
-            Grass(position=(x, 0, z))
+            block = Grass(position=(x, 0, z))
+            blocks.append(block)
 
 def vis_co_sys():
     for z in range(-30, 300):
@@ -30,3 +40,7 @@ def vis_co_sys():
     for y in range(-30, 300):
         a3=Entity(parent=scene, model='cube', color=color.yellow, scale=.1)
         a3.position=(0,y*.1,0)
+
+def vis_tanks(name, x, z):
+    npc_ = npc.Tank(name, x=x, z=z)
+    npcs.append(npc_)
