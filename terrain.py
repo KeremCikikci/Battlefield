@@ -45,3 +45,7 @@ def vis_co_sys():
 def vis_tanks(name, x, z):
     npc_ = npc.Tank(name, x=x, z=z)
     npcs.append(npc_)
+
+def vis_target(position):
+    target = Target(position)
+    blocks.append(target)

@@ -35,8 +35,7 @@ class Tank(Button):
         self.cooldown = 1 # sn
         self.fireTime = 0
 
-        self.v_hor_angle = 60
-        self.v_ver_angle = self.v_hor_angle * (9/16)
+        self.enemies = []
 
     def update(self):
         self.fall_s = 0
@@ -78,16 +77,6 @@ class Tank(Button):
 
         if self.fireTime < self.cooldown:
             self.fireTime += time.dt
-
-        # _line_model = Mesh(vertices=[Vec3(0,0,0), Vec3(0,0,1)], mode='line')
-        
-        # _raycaster = Entity(add_to_scene_entities=False)
-
-        # _raycaster.position = origin
-
-        # temp = Entity(position=self.position, model=_line_model, scale=Vec3(1,1,9999), add_to_scene_entities=False)
-        # temp.look_at(_raycaster.position + _raycaster.forward)
-        # destroy(temp, 1/30)
 
     def fall(self):
         if self.fall_s < self.max_fall_s:

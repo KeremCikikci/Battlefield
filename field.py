@@ -11,9 +11,6 @@ npcs = []
 
 app = Ursina()
 
-print(Grass().collider)
-
-
 EditorCamera()
 
 x_pos, y_pos, z_pos = 17, 12, -14
@@ -34,6 +31,6 @@ vis_rect_terrain(10, 10)
 
 vis_tanks('tank1', rd.randint(0, mWIDTH-1), rd.randint(0, mLENGTH-1))
 vis_tanks('tank2', rd.randint(0, mWIDTH-1), rd.randint(0, mLENGTH-1))
-
+vis_target((0, 1, 0))
 
 app.run()
