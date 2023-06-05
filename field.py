@@ -11,7 +11,7 @@ npcs = []
 
 app = Ursina()
 
-EditorCamera()
+#EditorCamera()
 
 x_pos, y_pos, z_pos = 17, 12, -14
 x_angle, y_angle, z_angle = 30, -30, 0
