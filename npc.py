@@ -5,7 +5,7 @@ import uuid
 from terrain import blocks, npcs
 
 class Tank(Button):
-    def __init__(self, name, x=0, y=1.5, z=0, texture='tex_1_green.png', origin=(0, 0, 0)):
+    def __init__(self, name, x=0, y=1.5, z=0, texture='tex_3_green.png', origin=(0, 0, 0)):
         super().__init__(
             parent=scene,
             position=(x, y, z),
@@ -48,17 +48,22 @@ class Tank(Button):
             hit_r = boxcast(self.world_position + (0, .1, 0), self.left, ignore=(self,), distance=.51, debug=False)
             
             if not hit_f and not hit_l and not hit_r:
-                if held_keys['w'] and self.speed <= self.max_s: self.speed += self.vel * time.dt   
+                if held_keys['w'] and self.speed <= self.max_s:
+                    self.go()
                 if held_keys['w'] == False and self.speed != 0:
-                    self.speed -= self.speed/self.friction * time.dt
-                    if self.speed < .01:
-                        self.speed = 0
+                    self.slowDown()
             else:
                 self.speed = 0
                 self.position += self.forward / 10
 
-            self.rotation_y -= self.rot_s * time.dt * (held_keys['a'] - held_keys['d'])
-        
+            if held_keys['a']:
+                self.turn(1)
+            elif held_keys['d']:
+                self.turn(-1)
+            
+            if held_keys['space']:
+                self.fire()
+
         self.rotation_y %= 360
         if self.rotation_y < 0: self.rotation_y += 360
         self.position += self.back * self.speed
@@ -71,12 +76,20 @@ class Tank(Button):
 
         if self.position.y <= -2:
             destroy(self)
-        
-        if held_keys['space'] and self.fireTime >= self.cooldown:
-            self.fire()
 
         if self.fireTime < self.cooldown:
             self.fireTime += time.dt
+
+    def turn(self, dir):
+        self.rotation_y -= self.rot_s * time.dt * dir
+
+    def go(self):
+        self.speed += self.vel * time.dt
+    
+    def slowDown(self):
+        self.speed -= self.speed/self.friction * time.dt
+        if self.speed < .01:
+            self.speed = 0
 
     def fall(self):
         if self.fall_s < self.max_fall_s:
@@ -84,8 +97,9 @@ class Tank(Button):
             self.y -= self.fall_s
 
     def fire(self):
-        self.fireTime = 0
-        Bullet(self, self.position, self.rotation_y)
+        if self.fireTime >= self.cooldown:
+            Bullet(self, self.position, self.rotation_y)
+            self.fireTime = 0
 
 class Bullet(Button):
     def __init__(self, own, position, rotation_y):

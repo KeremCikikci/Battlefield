@@ -23,12 +23,11 @@ def vis_terrain(map_name):
                     block = Sand(position=(x,0,z))
                 blocks.append(block)
 
-
 def vis_rect_terrain(mLENGTH, mWIDTH):
     for z in range(mLENGTH):
         for x in range(mWIDTH):
             block = Grass(position=(x, 0, z))
-            blocks.append(block)
+            #blocks.append(block)
 
 def vis_co_sys():
     #sistem hatali mesh ile yapilmasi lazim ardi ardina bir sürü koyarak degil
