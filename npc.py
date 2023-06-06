@@ -2,10 +2,10 @@ from ursina import *
 from ursina import ursinamath
 import math
 import uuid
-from terrain import blocks, npcs
+from terrain import blocks, npcs, destroy_
 
 class Tank(Button):
-    def __init__(self, name, x=0, y=1.5, z=0, texture='tex_3_green.png', origin=(0, 0, 0)):
+    def __init__(self, name='tank1', x=0, y=1.5, z=0, texture='tex_3_green.png', origin=(0, 0, 0)):
         super().__init__(
             parent=scene,
             position=(x, y, z),
@@ -31,6 +31,7 @@ class Tank(Button):
         self.max_fall_s = 1
         self.fall_s = 0
         self.gravity = 2
+        self.gravity_active = False
 
         self.cooldown = 1 # sn
         self.fireTime = 0
@@ -38,9 +39,6 @@ class Tank(Button):
         self.enemies = []
 
     def update(self):
-        self.fall_s = 0
-
-        origin = self.world_position - (0, .5, 0) # tankin zemini
 
         if self.isSelected:
             hit_f = boxcast(self.world_position + (0, .1, 0), self.back, ignore=(self,), distance=.51, debug=False)
@@ -53,8 +51,9 @@ class Tank(Button):
                 if held_keys['w'] == False and self.speed != 0:
                     self.slowDown()
             else:
-                self.speed = 0
-                self.position += self.forward / 10
+                pass
+                #self.speed = 0
+                #self.position += self.forward / 10
 
             if held_keys['a']:
                 self.turn(1)
@@ -69,9 +68,9 @@ class Tank(Button):
         self.position += self.back * self.speed
         self.y -= self.fall_s
         
-        hit_d = boxcast(origin + (-.5, 0, .5) , self.down, ignore=(self,), debug=False, distance= .1)
+        hit_d = boxcast(self.world_position - (0, .5, 0) + (-.5, 0, .5) , self.down, ignore=(self,), debug=False, distance= .1)
 
-        if not hit_d:
+        if not hit_d and self.gravity_active:
             self.fall()
 
         if self.position.y <= -2:
@@ -98,7 +97,7 @@ class Tank(Button):
 
     def fire(self):
         if self.fireTime >= self.cooldown:
-            Bullet(self, self.position, self.rotation_y)
+            Bullet(self.id, self.position, self.rotation_y)
             self.fireTime = 0
 
 class Bullet(Button):
@@ -123,14 +122,14 @@ class Bullet(Button):
 
         if ursinamath.distance(self.start_pos, self.position) > 100:
             destroy(self)
-
+        
         if hit:
             for npc in npcs:
                 if npc.id == hit.entity.id:
-                    destroy(npc)
+                    destroy_(npc, 'npc')
             for block in blocks:
                 if block.id == hit.entity.id:
-                    destroy(block)
+                    destroy_(block, 'block')
             destroy(self)
 
         

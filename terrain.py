@@ -48,3 +48,10 @@ def vis_tanks(name, x, z):
 def vis_target(position):
     target = Target(position)
     blocks.append(target)
+
+def destroy_(obj, type):
+    if type == 'npc':
+        npcs.remove(obj)
+    if type == 'block':
+        blocks.remove(obj)
+    destroy(obj)
