@@ -1,7 +1,8 @@
 This project is not a finished or completed project.
 The main purpose of the project is to set an example especially for those who want to use the Ursina game engine.
 However, the project is open to improvements and new ideas.
-An artificial intelligence model for the currently developed Tank object is trained in the train.py file in the project, but the model is not added to the project as this file currently only trains the tank to hit the target.
+An artificial intelligence model for the currently developed Tank object is trained in the train.py, but the model is not added to the project as this file currently only trains the tank to hit the target.
+In addition, a user interface has been designed (ui.png) to monitor and control npc and cameras, but the development of their code has been delayed because it is very cumbersome to create a user interface in ursina.
 # Packages used in the project are listed below.
 -ursina
 -stable_beselines
@@ -25,3 +26,4 @@ An artificial intelligence model for the currently developed Tank object is trai
 
 https://github.com/KeremCikikci/just-discovery/assets/98697826/b1e8df6a-d043-4745-b538-e891745245fd
 
+*I would like to thank pokepetter, the creator of ursina, who made this project and developing 3D games in python so easy.
