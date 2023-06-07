@@ -20,3 +20,8 @@ An artificial intelligence model for the currently developed Tank object is trai
 -Different block types
 -Easy to edit tank block and shell features
 -Control the tank by keyboard
+
+
+
+https://github.com/KeremCikikci/just-discovery/assets/98697826/b1e8df6a-d043-4745-b538-e891745245fd
+
