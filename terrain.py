@@ -30,7 +30,7 @@ def vis_rect_terrain(mLENGTH, mWIDTH):
             #blocks.append(block)
 
 def vis_co_sys():
-    #sistem hatali mesh ile yapilmasi lazim ardi ardina bir sürü koyarak degil
+    # Error
     for z in range(-30, 300):
         a1=Entity(parent=scene, model='cube', color=color.white, scale=.1)
         a1.position=(0,0,z*.1)

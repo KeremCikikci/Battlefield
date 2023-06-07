@@ -31,6 +31,7 @@ vis_rect_terrain(10, 10)
 
 vis_tanks('tank1', rd.randint(0, mWIDTH-1), rd.randint(0, mLENGTH-1))
 
+
 vis_target((0, 1, 0))
 
 app.run()

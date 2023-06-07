@@ -39,8 +39,8 @@ class ENV(Env):
 
         # Gym
         self.action_space = Discrete(4) # turn left, turn right, go forward, fire
-        # deltaX, deltaY, deltaZ, deltaRotationY, speed
-        self.observation_space = Box(np.array([0,0,0,0,0], dtype=int), np.array([10, 10, 10, 360, 1], dtype=int))
+        # deltaX, deltaZ, deltaRotationY
+        self.observation_space = Box(np.array([0,0,0, 0], dtype=float), np.array([10, 10, 360, 360], dtype=float))
         
         # Agent
         self.tank = Tank()
@@ -49,14 +49,24 @@ class ENV(Env):
         # Target
         vis_target([random.randint(0, 9), 1, random.randint(0, 9)])
 
+        self.tank.look_at(blocks[0], axis='back')
+        self.tank.rotation_x, self.tank.rotation_z = 0, 0
+        if self.tank.rotation_y < 0:
+            self.tank.rotation_y += 360
+        self.tank.rotation_y %= 360
+        self.deltaRotY = self.tank.rotation_y
+        self.tank.rotation_y = 0
+
         self.delta = self.tank.get_position(relative_to=blocks[0])
-        self.state = [self.delta[0], self.delta[1], self.delta[2], self.tank.rotation_y, self.tank.speed]
+        self.state = [self.delta[0], self.delta[2], self.deltaRotY, self.tank.rotation_y]
         # Terrain
         vis_rect_terrain(10, 10)
     
     def step(self, action):
         self.frame += 1
-        self.tank.look_at(blocks[0], axis="back")
+        
+        delta1 = abs(self.deltaRotY-self.tank.rotation_y)
+
         # Action
         if action == 0:
             self.tank.turn(1)
@@ -67,18 +77,25 @@ class ENV(Env):
         elif action == 3:
             self.tank.fire()
 
+        delta2 = abs(self.deltaRotY-self.tank.rotation_y)
+
         if len(blocks) > 0:
             self.delta = self.tank.get_position(relative_to=blocks[0])
-            self.state = [self.delta[0], self.delta[1], self.delta[2], self.tank.rotation_y, self.tank.speed]
+            self.state = [self.delta[0], self.delta[2], self.deltaRotY, self.tank.rotation_y]
+        
             
         terminate = False
         if self.frame > 1000:
             terminate = True
 
         reward = 0
+        if delta2 < delta1:
+            reward = .1
+        else:
+            reward = - .1
         if len(blocks) == 0:
             print("traiiiiiin")
-            self.state = [0, 0, 0, self.tank.rotation_y, self.tank.speed]
+            self.state = [0, 0, 0, self.tank.rotation_y, 360]
             reward = 1
             terminate = True
 
@@ -88,7 +105,7 @@ class ENV(Env):
         if self.tank.z < 0 or self.tank.z > 10:
             reward = -.1
             terminate = True
-
+        print(self.state)
         app.step()
         return self.state, reward, terminate, {}
 
@@ -111,8 +128,16 @@ class ENV(Env):
         # Target
         vis_target([random.randint(0, 9), 1, random.randint(0, 9)])
 
+        self.tank.look_at(blocks[0], axis='back')
+        self.tank.rotation_x, self.tank.rotation_z = 0, 0
+        if self.tank.rotation_y < 0:
+            self.tank.rotation_y += 360
+        self.tank.rotation_y %= 360
+        self.deltaRotY = self.tank.rotation_y
+        self.tank.rotation_y = 0
+
         self.delta = self.tank.get_position(relative_to=blocks[0])
-        self.state = [self.delta[0], self.delta[1], self.delta[2], self.tank.rotation_y, self.tank.speed]
+        self.state = [self.delta[0], self.delta[2], self.deltaRotY, self.tank.rotation_y]
 
         return self.state
 
@@ -137,7 +162,7 @@ def check():
 def train():
     #log_path = os.path.join('Training', 'Logs')
     model = PPO("MlpPolicy", env, verbose=1)#, tensorboard_log=log_path)
-    model.learn(total_timesteps=50000)
+    model.learn(total_timesteps=1000)
     model.save('PPO-100000')
 
 def test():
@@ -160,4 +185,3 @@ def use():
 
 
 train()
-app.run()

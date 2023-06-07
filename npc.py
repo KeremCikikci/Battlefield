@@ -5,14 +5,13 @@ import uuid
 from terrain import blocks, npcs, destroy_
 
 class Tank(Button):
-    def __init__(self, name='tank1', x=0, y=1.5, z=0, texture='tex_3_green.png', origin=(0, 0, 0)):
+    def __init__(self, name='tank1', x=0, y=1.5, z=0, model='npc/tank/tank', texture='tex_3_green.png'):
         super().__init__(
             parent=scene,
             position=(x, y, z),
-            model='npc/tank/tank',
+            model=model,
             texture='npc/tank/' + texture,
-            color=color.color(0, 0, random.uniform(0.9, 1.0)),
-            origin=origin
+            color=color.color(0, 0, random.uniform(0.9, 1.0))
         )
         self.id = uuid.uuid1()
         self.name = name
